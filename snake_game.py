@@ -95,7 +95,18 @@ def check_collison():
     if (snake_x, snake_y) in snake_body: return True
 
 def game_over():
-    pass
+    game_over_text = font.render("Game Over ! Press any key to restart", True, WHITE)
+    screen.blit(game_over_text, (WIDTH // 4, HEIGHT // 2))
+    pygame.display.flip()
+    waiting_for_restart = True
+    while waiting_for_restart:
+        for event in pygame.event.get():
+            if event.type == KEYDOWN:  
+                reset_game()  
+                waiting_for_restart = False  
+            elif event.type == pygame.QUIT:  
+                pygame.quit()
+                exit()
 
 # Infinite Event loop
 running = True
