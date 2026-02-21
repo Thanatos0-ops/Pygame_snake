@@ -35,8 +35,8 @@ GRAY = (127, 127, 127)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
-TEAL = (0, 200, 200)
+DEEP_NAVY = (0, 0, 128)
+SOFT_WHITE = (255, 255, 240)
 
 # Score
 score = 0
@@ -57,15 +57,15 @@ def reset_game():
 
 
 def background():
-    screen.fill((GRAY))
+    screen.fill((DEEP_NAVY))
 
      # Draw vertical lines every GRID_SIZE pixels
     for x in range(0, WIDTH, GRID_SIZE):
-        pygame.draw.line(screen, TEAL, (x, 0), (x, HEIGHT), 2)
+        pygame.draw.line(screen, SOFT_WHITE, (x, 0), (x, HEIGHT), 2)
     
     # Draw horizontal lines every GRID_SIZE pixels
     for y in range(0, HEIGHT, GRID_SIZE):
-        pygame.draw.line(screen, TEAL, (0, y), (WIDTH, y), 2)
+        pygame.draw.line(screen, SOFT_WHITE, (0, y), (WIDTH, y), 2)
 
 def move_snake():
     global snake_x, snake_y, s
@@ -110,10 +110,9 @@ def check_collision():
         return True
     return False
 
-
 def game_over():
     game_over_text = font.render("Game Over ! Press any key to restart", True, WHITE)
-    screen.blit(game_over_text, (WIDTH // 4, HEIGHT // 2))
+    screen.blit(game_over_text, (WIDTH // 2, HEIGHT // 2))
     pygame.display.flip()
     waiting_for_restart = True
     while waiting_for_restart:
@@ -134,13 +133,13 @@ while running:
         if event.type == KEYDOWN:
             if event.key == K_ESCAPE:
                 running = False
-            elif K_w == event.key or event.key == K_UP:
+            elif (K_w == event.key or event.key == K_UP) and snake_dy == 0:
                 snake_dx, snake_dy = 0, -1
-            elif K_s == event.key or event.key == K_DOWN:
+            elif (K_s == event.key or event.key == K_DOWN) and snake_dy == 0:
                 snake_dx, snake_dy = 0, 1
-            elif K_a == event.key or event.key == K_LEFT:
+            elif (K_a == event.key or event.key == K_LEFT) and snake_dx == 0:
                 snake_dx, snake_dy = -1, 0
-            elif K_d == event.key or event.key == K_RIGHT:
+            elif (K_d == event.key or event.key == K_RIGHT) and snake_dx == 0:
                 snake_dx, snake_dy = 1, 0
 
     background()
