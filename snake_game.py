@@ -40,6 +40,7 @@ SOFT_WHITE = (255, 255, 240)
 
 # Score
 score = 0
+highscore = 0
 font = pygame.font.SysFont(None, 24)
 
 def draw_food():
@@ -111,8 +112,19 @@ def check_collision():
     return False
 
 def game_over():
+    global highscore
+
+    if score > highscore:
+        highscore = score
+
+    screen.fill(BLACK)
+
     game_over_text = font.render("Game Over ! Press any key to restart", True, WHITE)
+    score_text = font.render(f"Your Score: {score}", True, WHITE)
+    highscore_text = font.render(f"HighScore: {highscore}", True, WHITE)
     screen.blit(game_over_text, (WIDTH // 2, HEIGHT // 2))
+    screen.blit(score_text, (WIDTH //2, HEIGHT // 2 + 30))
+    screen.blit(highscore_text, (WIDTH //2 , HEIGHT // 2 + 60))
     pygame.display.flip()
     waiting_for_restart = True
     while waiting_for_restart:
